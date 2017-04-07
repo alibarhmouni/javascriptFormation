@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas>Votre ordinateur ne supporte pas canvas</canvas>
+<script>
+let request = new XMLHttpRequest();
+
+request.onload = function(){
+	if(request.status === 200){
+		success(request.response);
+
+	}
+}
+
+tabA = [];
+tabB = [];
+tabC = [];
+
+request.open("GET","ajaxPerso.json",true);
+request.send();
+
+var success = function(data){
+	
+	myFuturData = JSON.parse(data) ;
+	launchGame();
+}
+
+var launchGame = function(){
+
+	
+	myFuturData.map(function(obj){
+		obj.score = Math.floor(Math.random()*1000);
+	});
+
+	myFuturData.forEach(function(obj){
+		if(obj.score > 750){
+			tabA.push(obj);
+		}
+		else if(obj.score > 500){
+			tabB.push(obj);
+		}
+		else if (obj.score < 500){
+			tabC.push(obj);
+		}
+		
+	});
+
+
+	// myFuturData.sort(function(obj1,obj2){
+		
+	// 	return obj1.score - obj2.score;
+
+	// });
+
+
+	myFuturData.sort(function(obj1,obj2){
+		
+		return obj2.score - obj1.score;
+
+
+	});
+
+	// console.log(myFuturData);
+	
+
+	// console.log(tabA);
+	// console.log(tabB);
+	// console.log(tabC);
+
+	
+
+	myFuturData.forEach(function(obj){
+		if(obj.country === "Bahrain"){
+			// console.log(obj);
+		}
+	})
+
+	// myFuturData.map((obj)=>{
+	// 	obj.score =Math.random()*1000;
+	// 	console.log(myFuturData);
+	// });
+}
+
+
+let canvas = document.querySelector('canvas');
+canvas.width =500;
+canvas.height = 500;
+
+
+let context = canvas.getContext('2d');
+// console.log(context);
+
+
+	// var dessiner = function(){
+
+
+		
+	// }
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

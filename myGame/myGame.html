@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<canvas id ='canvas'></canvas>
+	<script type="text/javascript" src="pixi/pixi.min.js"></script>
+	<script type="text/javascript" src="pixi/keyboard.js"></script>
+	<script type="text/javascript" src="getTiledMapContainer.js"></script>
+	<script type="text/javascript" src="bump.js"></script>	
+	<script>
+
+		var Game = Game || {};
+		b = new Bump(PIXI);
+		
+		Game.initialise = function(){
+			Game.renderer = new PIXI.CanvasRenderer(960, 320);
+			document.body.appendChild(Game.renderer.view);
+			Game.stage = new PIXI.Container();
+			
+			Game.load();
+		}
+
+		Game.load = function(){
+
+			PIXI.loader
+		  	.add("map","carte.json")
+		  	.add("terrain", "images/terrain.png")
+		  	.add("collision","images/collision.png")
+		  	.add("ship","images/ship.png")
+		  	.load(Game.creation);
+
+		}
+
+
+
+		Game.creation = function(){
+
+			Game.mapContainerGround = getTiledMapContainer({
+		  	
+		  		// collisions : PIXI.loader.resources["collision"].texture,
+		  		terrain : PIXI.loader.resources["terrain"].texture,
+		  		},
+
+		  		PIXI.loader.resources.map.data
+
+		  	);
+		  	console.log(Game.mapContainerGround.children);
+
+		  	Game.ship = new PIXI.Sprite(
+  			PIXI.loader.resources["ship"].texture
+			);
+			// Game.ship.position.set(100, 150);
+			Game.ship.x = 100;
+			Game.ship.y = 150;
+			Game.ship.scale.x = 0.10;
+			Game.ship.scale.y = 0.10;
+			Game.ship.anchor.x = 0.5;
+			Game.ship.anchor.y = 0.5;
+			Game.ship.rotation = 1.60;
+			Game.mapContainerGround.getChildByName("collisions").alpha = 0;
+			Game.stage.addChild(Game.mapContainerGround);
+			Game.stage.addChild(Game.ship);
+			Game.renderer.render(Game.stage);
+			Game.move();
+		}
+
+		Game.move = function(){
+
+			
+
+		        requestAnimationFrame(Game.move);
+
+		        if(KEYBOARD.up){
+		            
+		            Game.ship.y -=3;
+		        }
+
+		        if(KEYBOARD.down){
+		            Game.ship.y +=3;
+		        }
+
+		        if(KEYBOARD.left){
+		            Game.ship.x -=3;
+		        }
+		        if(KEYBOARD.right){
+		            Game.ship.x +=3;
+		        }
+
+		       Game.renderer.render(Game.stage);
+		       // hit(Game.ship, spriteTwo)
+
+    		
+		}
+
+
+		Game.initialise();
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Map</title>
+</head>
+
+<body>	
+
+	<script src="js/pixi.js"></script>
+	<script src="js/pixi-tiledmap.js"></script>
+	<script src="js/keyboard.js"></script>
+	<script>
+
+		var Game = Game || {};
+
+		Game.width = 640;
+		Game.height = 480;
+
+		Game.init = function(){
+			Game.stage = new PIXI.Container();
+
+			Game.renderer = PIXI.autoDetectRenderer(Game.width, Game.height);
+		
+			document.body.appendChild(Game.renderer.view);
+
+			Game.preload();
+		}
+
+		Game.preload = function(){
+			console.log( Game )
+			PIXI.loader
+			  .add("map","js/map.json")
+			  .add("grounds","images/grounds.png")
+			  .add("trees","images/trees.png")
+			  .add("collision","images/collision.png")
+			  .load(Game.create);
+		}
+
+		Game.create = function() {
+		  Game.mapContainerGround = getTiledMapContainer(
+		  	{
+		  		grounds : PIXI.loader.resources["grounds"].texture,
+		  		trees : PIXI.loader.resources["trees"].texture,
+		  		collision : PIXI.loader.resources["collision"].texture,
+		  	},
+		  	PIXI.loader.resources.map.data
+		  );
+
+		  Game.mapContainerGround.getChildByName("collision").alpha = 0.2;
+
+		  Game.stage.addChild( Game.mapContainerGround );
+		  
+		  //Render the stage   
+		  Game.renderer.render(Game.stage);
+
+		  Game.update();
+
+		}
+
+		Game.update = function(){
+			//
+			requestAnimationFrame(Game.update);
+
+			if(KEYBOARD.left){
+				Game.mapContainerGround.x += 5;
+			}
+			if(KEYBOARD.right ){
+				Game.mapContainerGround.x -= 5;
+			}
+
+			// check bound
+			/*
+			if(Game.mapContainerGround.x > 0){
+				Game.mapContainerGround.x = 0;
+			} else if(Game.mapContainerGround.x + Game.mapContainerGround.width < Game.width){
+				//Game.mapContainerGround.x = -Game.width;
+				console.log( Game.mapContainerGround.x) //-325
+				console.log( Game.mapContainerGround.width) //960
+			}
+			*/
+			
+
+
+			//&& Game.mapContainerGround.x + Game.mapContainerGround.width > Game.width
+			Game.renderer.render(Game.stage);
+		}
+
+		Game.init();
+
+
+
+		
+	</script>
+			
+
+</body>
+</html>

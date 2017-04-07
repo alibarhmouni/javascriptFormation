@@ -1,0 +1,27 @@
+[
+	{
+	"nom" : "ali",
+	"prenom":"barhmouni",
+	"age":25,
+	"enfants":["enfant1","enfant2"],
+	"computer":{
+		"marque":"asus",
+		"os":"windows",
+		"version":10
+	}
+
+},
+
+{
+	"nom" : "ali",
+	"prenom":"barhmouni",
+	"age":25,
+	"enfants":["enfant1","enfant2"],
+	"computer":{
+		"marque":"asus",
+		"os":"windows",
+		"version":10
+	}
+
+}
+]

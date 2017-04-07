@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<script>
+
+	let request = new XMLHttpRequest();
+	
+	request.onload = function(){
+		if(request.status === 200){
+			success(request.response);
+
+		}
+	}
+
+	
+
+	request.open("GET","lorem.json",true);
+	request.send();
+
+	var success = function(data){
+		
+		myFuturData = JSON.parse(data) ;
+		launchGame();
+	}
+
+	var launchGame = function(){
+		console.log(myFuturData);
+	}
+
+	
+	console.dir(request);
+
+	// var ajax = function(method,fichier, var succes = function(){} ,var error = function(){});
+
+</script>
+</body>
+</html>
